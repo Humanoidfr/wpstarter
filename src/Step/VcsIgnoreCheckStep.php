@@ -118,10 +118,7 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
             : $this->printNotIgnoredMessage($notIgnored);
 
         /** @psalm-suppress TypeDoesNotContainType */
-        if (
-            ($this->success !== '')
-            && $config[Config::IS_WPSTARTER_SELECTED_COMMAND]->is(true)
-        ) {
+        if ($this->success !== '') {
             return Step::SUCCESS;
         }
 
@@ -183,7 +180,7 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
     {
         $from = $paths->root();
 
-        $envDirName = $config[Config::ENV_DIR]->unwrap();
+        $envDirName = $config[Config::ENV_DIR]->unwrapOrFallback('');
         $envFileName = $config[Config::ENV_FILE]->unwrapOrFallback('.env');
 
         /** @var list<string> $toIgnore */
@@ -241,11 +238,12 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
             }
         }
 
+        /** @var list<non-empty-string> $children */
         foreach ($parents as $parent => $children) {
-            $count = count($children);
-            if ($count < 1) {
+            if (!$children) {
                 continue;
             }
+            $count = count($children);
             if ($count > 1) {
                 $fullpath = "{$root}/{$parent}";
                 $relPath = is_dir($fullpath) ? "{$parent}/" : $parent;
@@ -277,7 +275,9 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
             if (strpos($relPath, '..') === 0) {
                 continue;
             }
-            (strpos($relPath, './') === 0) and $relPath = substr($relPath, 2);
+            if (strpos($relPath, './') === 0) {
+                $relPath = substr($relPath, 2) ?: '';
+            }
             $relative[] = ($relPath !== '') ? $relPath : $path;
         }
 
@@ -335,17 +335,16 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
     private function printIgnoreConfigNotFound(array $pathsToIgnore, Config $config): void
     {
         if (
-            ($this->vcs !== 'git')
-            && !$this->io->isVerbose()
+            !$this->io->isVerbose()
             && $config[Config::IS_WPSTARTER_SELECTED_COMMAND]->not(true)
         ) {
             return;
         }
 
-        $vcsName = $this->vcs ? self::VCS_LABELS[$this->vcs] : '';
+        $vcsName = $this->vcs ? self::VCS_LABELS[$this->vcs] : 'a';
 
         $this->io->writeCommentBlock(
-            "Looks like you are using {$vcsName} for version control, but "
+            "Looks like you are using {$vcsName} version control software, but "
             . 'WP Starter was not able to determine which paths are ignored, if any.',
             'Please do not keep under version control the following paths:',
             sprintf('"%s".', implode('", "', array_keys($pathsToIgnore))),
@@ -414,8 +413,9 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
         }
 
         $content = file_get_contents("{$root}/.gitignore");
+
         if ($content && strpos($content, self::IGNORE_SIGNATURE) !== false) {
-            $this->success = "Found a WP-Starter generated .gitignore file.";
+            $this->success = "Found a WP Starter-generated <comment>.gitignore</comment> file.";
 
             return [];
         }
@@ -473,7 +473,7 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
 
         $content = file_get_contents("{$root}/.hgignore");
         if ($content && strpos($content, self::IGNORE_SIGNATURE) !== false) {
-            $this->success = "Found a WP-Starter generated .hgignore file.";
+            $this->success = "Found a WP Starter-generated <comment>.hgignore</comment> file.";
 
             return [];
         }
@@ -520,10 +520,10 @@ class VcsIgnoreCheckStep implements OptionalStep, ConditionalStep
         $filepath = $paths->root($file);
 
         if (!$this->filesystem->writeContent($built, $filepath)) {
-            $this->io->writeError("Creation of '{$filepath}' failed.");
+            $this->io->writeError("Creation of <comment>'{$filepath}'</comment> failed.");
         }
 
-        $this->success = "'{$filepath}' written.";
+        $this->success = "<comment>{$file}</comment> written.";
 
         return [];
     }

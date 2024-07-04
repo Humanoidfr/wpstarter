@@ -89,11 +89,11 @@ final class EnvExampleStep implements FileCreationStep, OptionalStep, Conditiona
         /** @var string $envFileName */
         $envFileName = $config[Config::ENV_FILE]->unwrapOrFallback('.env');
         /** @var string $envDir */
-        $envDir = $config[Config::ENV_DIR]->unwrapOrFallback($paths->root());
+        $envDir = $config[Config::ENV_DIR]->unwrapOrFallback('');
         $envFile = $this->filesystem->normalizePath("{$envDir}/{$envFileName}");
 
         if (is_file($paths->root($envFile))) {
-            $this->reason = sprintf('environment file already exists', Config::ENV_EXAMPLE);
+            $this->reason = 'environment file already exists';
 
             return false;
         }
@@ -110,7 +110,10 @@ final class EnvExampleStep implements FileCreationStep, OptionalStep, Conditiona
     public function targetPath(Paths $paths): string
     {
         /** @var string $envDir */
-        $envDir = $this->config[Config::ENV_DIR]->unwrap();
+        $envDir = $this->config[Config::ENV_DIR]->unwrapOrFallback('');
+        if ($envDir === '') {
+            $envDir = $paths->root('');
+        }
 
         return $this->filesystem->normalizePath("{$envDir}/.env.example");
     }

@@ -19,6 +19,8 @@ use Composer\Util\Filesystem;
  *
  * Many paths can be configured, this helper provides a way to do the configuration parsing only
  * once that use helper methods to obtain relative or absolute paths to specific folders.
+ *
+ * @template-implements \ArrayAccess<mixed, mixed>
  */
 final class Paths implements \ArrayAccess
 {
@@ -319,7 +321,7 @@ final class Paths implements \ArrayAccess
         if (strpos($wpContentFullDir, $cwd) !== 0 || ($cwd === $wpContentFullDir)) {
             $to = ($cwd === $wpContentFullDir) ? 'root dir' : 'a dir outside root';
             throw new \Exception(
-                "Config for WP config dir is pointing to {$to}, WP Starter does not support that."
+                "Config for WP content dir is pointing to {$to}, WP Starter does not support that."
             );
         }
 

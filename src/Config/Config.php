@@ -18,6 +18,8 @@ use WeCodeMore\WpStarter\Util\Filesystem;
  *
  * A single place that can be used to access validated configuration read from JSON configuration,
  * but also to pass arbitrary data across steps.
+ *
+ * @template-implements \ArrayAccess<mixed, mixed>
  */
 final class Config implements \ArrayAccess
 {
@@ -38,6 +40,7 @@ final class Config implements \ArrayAccess
     public const ENV_DIR = 'env-dir';
     public const ENV_EXAMPLE = 'env-example';
     public const ENV_FILE = 'env-file';
+    public const ENV_USE_PUTENV = 'use-putenv';
     public const INSTALL_WP_CLI = 'install-wp-cli';
     public const IS_COMPOSER_INSTALL = 'is-composer-install';
     public const IS_COMPOSER_UPDATE = 'is-composer-update';
@@ -74,6 +77,7 @@ final class Config implements \ArrayAccess
         self::ENV_DIR => null,
         self::ENV_EXAMPLE => true,
         self::ENV_FILE => '.env',
+        self::ENV_USE_PUTENV => false,
         self::INSTALL_WP_CLI => true,
         self::IS_COMPOSER_INSTALL => null,
         self::IS_WPSTARTER_COMMAND => null,
@@ -110,6 +114,7 @@ final class Config implements \ArrayAccess
         self::ENV_DIR => 'validateDirName',
         self::ENV_EXAMPLE => 'validateBoolOrAskOrUrlOrPath',
         self::ENV_FILE => 'validateFileName',
+        self::ENV_USE_PUTENV => 'validateBool',
         self::INSTALL_WP_CLI => 'validateBool',
         self::IS_COMPOSER_INSTALL => 'validateBool',
         self::IS_COMPOSER_UPDATE => 'validateBool',

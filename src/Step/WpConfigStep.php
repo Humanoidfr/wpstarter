@@ -120,7 +120,7 @@ final class WpConfigStep implements FileCreationStep, BlockingStep
         }
 
         /** @var string $envDirName */
-        $envDirName = $config[Config::ENV_DIR]->unwrap();
+        $envDirName = $config[Config::ENV_DIR]->unwrapOrFallback('');
         $envDir = $paths->root($envDirName);
         $this->filesystem->createDir($envDir);
         $envRelDir = $this->relPath($from, $envDir);
@@ -144,6 +144,7 @@ final class WpConfigStep implements FileCreationStep, BlockingStep
             'EARLY_HOOKS_FILE' => $earlyHookFile,
             'ENV_BOOTSTRAP_DIR' => $envBootstrapDir ?: $envRelDir,
             'ENV_FILE_NAME' => $config[Config::ENV_FILE]->unwrapOrFallback('.env'),
+            'ENV_USE_PUTENV' => $config[Config::ENV_USE_PUTENV]->unwrapOrFallback(false),
             'WPSTARTER_PATH' => $compatMode ? $envRelDir : $rootRelDir,
             'ENV_REL_PATH' => $envRelDir,
             'REGISTER_THEME_DIR' => $register ? 'true' : 'false',
