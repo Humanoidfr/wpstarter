@@ -142,7 +142,7 @@ abstract class IntegrationTestCase extends \PHPUnit\Framework\TestCase
      * @return Paths
      */
     protected function factoryPaths(
-        string $cwd = null,
+        ?string $cwd = null,
         int $verbosity = OutputInterface::VERBOSITY_NORMAL,
         string $input = '',
         array $extra = []
@@ -171,7 +171,7 @@ abstract class IntegrationTestCase extends \PHPUnit\Framework\TestCase
     protected function factoryComposerConfig(
         string $input = '',
         int $verbosity = OutputInterface::VERBOSITY_NORMAL,
-        string $cwd = null
+        ?string $cwd = null
     ): Composer\Config {
 
         return Composer\Factory::createConfig(
@@ -194,7 +194,7 @@ abstract class IntegrationTestCase extends \PHPUnit\Framework\TestCase
      * @param string $cwd
      * @return SystemProcess
      */
-    protected function factorySystemProcess(string $cwd = null): SystemProcess
+    protected function factorySystemProcess(?string $cwd = null): SystemProcess
     {
         return new SystemProcess(
             $this->factoryPaths($cwd),
@@ -206,7 +206,7 @@ abstract class IntegrationTestCase extends \PHPUnit\Framework\TestCase
      * @param string $cwd
      * @return PhpProcess
      */
-    protected function factoryPhpProcess(string $cwd = null): PhpProcess
+    protected function factoryPhpProcess(?string $cwd = null): PhpProcess
     {
         $php = (new PhpExecutableFinder())->find() ?: 'php';
 

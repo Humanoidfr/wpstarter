@@ -154,7 +154,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param array|null $extra
      * @return Util\Paths
      */
-    protected function factoryPaths(array $extra = null): Util\Paths
+    protected function factoryPaths(?array $extra = null): Util\Paths
     {
         $root = $this->fixturesPath() . '/paths-root';
 

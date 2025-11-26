@@ -175,7 +175,7 @@ class RequirementsTest extends TestCase
      * @param string $customRoot
      * @return mixed
      */
-    private function executeExtractConfig(array $extra, string $customRoot = null): array
+    private function executeExtractConfig(array $extra, ?string $customRoot = null): array
     {
         $tester = \Closure::bind(
             function (string $rootPath) use ($extra): array {

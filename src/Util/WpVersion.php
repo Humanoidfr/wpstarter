@@ -67,7 +67,7 @@ class WpVersion
     public function __construct(
         PackageFinder $packageFinder,
         Io $io,
-        string $fallbackVersion = null
+        ?string $fallbackVersion = null
     ) {
 
         $this->packageFinder = $packageFinder;

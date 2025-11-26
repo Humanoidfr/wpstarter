@@ -215,7 +215,7 @@ class PhpToolProcessFactoryTest extends IntegrationTestCase
      * @return PhpToolProcessFactory
      */
     private function factoryPhpToolProcessFactory(
-        UrlDownloader $urlDownloader = null
+        ?UrlDownloader $urlDownloader = null
     ): PhpToolProcessFactory {
 
         $composer = $this->factoryComposer();

@@ -151,7 +151,7 @@ class WpCliToolTest extends IntegrationTestCase
      * @param string|null $cwd
      * @return WpCliTool
      */
-    private function factoryTool(string $cwd = null): WpCliTool
+    private function factoryTool(?string $cwd = null): WpCliTool
     {
         return new WpCliTool(
             new Config(

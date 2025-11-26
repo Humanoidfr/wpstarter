@@ -74,7 +74,7 @@ WP Starter provides an option to register default themes shipped with core packa
 
 There's also the `move-content` option that when set to `true` tells WP Starter to moves the entire `wp-content` folder shipped with a WordPress package into the project's content folder.
 
-If there's no interest in default plugin/themes, the suggested approach is to use the [Root's package]((https://roots.io/)), [wp-downloader](https://github.com/wecodemore/wp-downloader), or a custom package that points to a "*no-content*" WordPress distribution.
+If there's no interest in default plugin/themes, the suggested approach is to use the [Root's package](https://roots.io/), [wp-downloader](https://github.com/wecodemore/wp-downloader), or a custom package that points to a "*no-content*" WordPress distribution.
 
 
 

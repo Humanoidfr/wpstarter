@@ -90,7 +90,7 @@ final class Result
      *
      * phpcs:disable Inpsyde.CodeQuality.ReturnTypeDeclaration.IncorrectVoidReturn
      */
-    private function __construct($value = null, \Throwable $error = null)
+    private function __construct($value = null, ?\Throwable $error = null)
     {
         // phpcs:enable Inpsyde.CodeQuality.ReturnTypeDeclaration.IncorrectVoidReturn
         if ($value instanceof Result) {

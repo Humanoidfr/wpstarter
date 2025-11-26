@@ -347,7 +347,7 @@ class WordPressEnvBridge
     /**
      * @param Dotenv|null $dotenv
      */
-    public function __construct(Dotenv $dotenv = null)
+    public function __construct(?Dotenv $dotenv = null)
     {
         $this->dotenv = $dotenv;
     }
