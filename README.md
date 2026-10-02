@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **Ce dépôt a migré sur GitLab le 2026-10-02 : https://gitlab.humanoid.fr/humanoid/wpstarter**
+> Cette copie GitHub est archivée et figée. Contribuer sur GitLab uniquement.
+> Le paquet Composer est encore servi par repman depuis cette copie GitHub : rebrancher la source Composer avant toute évolution sur GitLab.
+
 WP Starter
 ==========
 
